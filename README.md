@@ -1,4 +1,4 @@
-# 🏨 Hotel Booking & Cancellation Analytics — Power BI Dashboard
+# 🏨 Hotel Booking & Cancellation Analytics - Power BI Dashboard
 
 An interactive Power BI dashboard that analyzes **119,390 hotel bookings** to show **when, where, and through which channels cancellations happen**, so hotel managers can plan pricing, deposit policies, and staffing around real demand.
 
@@ -6,7 +6,7 @@ An interactive Power BI dashboard that analyzes **119,390 hotel bookings** to sh
 
 ---
 
-## 📌 Business Problem
+## Business Problem
 
 Hotels lose revenue when booked rooms are cancelled, and the loss is hard to recover close to the arrival date. Management needs answers to three questions:
 
@@ -16,7 +16,7 @@ Hotels lose revenue when booked rooms are cancelled, and the loss is hard to rec
 
 ---
 
-## 🔍 Key Insights
+## Key Insights
 
 | Metric | Value |
 |---|---|
@@ -31,7 +31,7 @@ Hotels lose revenue when booked rooms are cancelled, and the loss is hard to rec
 - **Loyal guests are mostly domestic.** Portugal (PRT) accounts for about **3.3K of 3.8K repeat guests**, while international markets (GBR, ESP, FRA, ITA) rarely return.
 - **Room type A dominates demand (69.1% of bookings)**, followed by D (23.6%) and E (7.3%).
 
-### 💡 Recommendations
+### Recommendations
 
 - **Tighten deposit or non-refundable rates for OTA bookings**, especially for arrivals in April–June.
 - **Encourage direct bookings**, which have the lowest share of cancellations, through member rates or perks on the hotel's own website.
@@ -40,7 +40,7 @@ Hotels lose revenue when booked rooms are cancelled, and the loss is hard to rec
 
 ---
 
-## 📊 Dashboard Features
+## Dashboard Features
 
 - **KPI cards:** Total Cancellations, Repeat Guests, Cancellation Rate
 - **Cancellation Rate by Arrival Month:** months ranked by cancellation risk
@@ -52,7 +52,7 @@ Hotels lose revenue when booked rooms are cancelled, and the loss is hard to rec
 
 ---
 
-## 🧮 DAX Measures
+## DAX Measures
 
 ```DAX
 Total Bookings      = COUNTROWS('Hotel Bookings')
@@ -79,7 +79,7 @@ Arrival Month = 'Hotel Bookings'[arrival_date_month]   -- Sort by column: Month 
 
 ---
 
-## 🗂️ Dataset
+## Dataset
 
 - **Source:** [Hotel booking demand](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand) (public dataset on Kaggle), originally from Antonio, Almeida & Nunes (2019), *Hotel booking demand datasets*, Data in Brief.
 - **Size:** 119,390 bookings × 32 columns
@@ -88,14 +88,14 @@ Arrival Month = 'Hotel Bookings'[arrival_date_month]   -- Sort by column: Month 
 
 ---
 
-## 🛠️ Tools
+## Tools
 
 - **Power BI Desktop:** data modeling, DAX measures, dashboard design
 - **Power Query:** data import and type cleaning
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 hotel-booking-demand-analysis/
@@ -109,7 +109,7 @@ hotel-booking-demand-analysis/
 
 ---
 
-## ▶️ How to Open
+## How to Open
 
 1. Install [Power BI Desktop](https://powerbi.microsoft.com/desktop/) (free, Windows).
 2. Clone or download this repository.
@@ -118,7 +118,7 @@ hotel-booking-demand-analysis/
 
 ---
 
-## 👤 Author
+## Author
 
 **Yunido Baheramsyah**, Data Analyst & Data Scientist
 GitHub: [@brmsyh](https://github.com/brmsyh)
