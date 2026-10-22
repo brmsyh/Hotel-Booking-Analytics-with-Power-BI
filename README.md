@@ -1,123 +1,124 @@
-# Hotel Booking Demand Analytics — Power BI
+# 🏨 Hotel Booking & Cancellation Analytics — Power BI Dashboard
 
-![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?logo=powerbi&logoColor=black)
-![DAX](https://img.shields.io/badge/DAX-measures-0078D4)
-![Dataset](https://img.shields.io/badge/records-119%2C390-informational)
+An interactive Power BI dashboard that analyzes **119,390 hotel bookings** to show **when, where, and through which channels cancellations happen**, so hotel managers can plan pricing, deposit policies, and staffing around real demand.
 
-An interactive Power BI dashboard that analyses **119K+ hotel bookings** to explain cancellations, seasonality, guest origin and room demand — built as a simulated freelance engagement for a hotel's Revenue Management and Marketing teams.
-
-![Dashboard overview](images/dashboard-overview.png)
+![Hotel Booking Demand Analysis dashboard](images/dashboard.png)
 
 ---
 
-## Table of Contents
+## 📌 Business Problem
 
-1. [Business Problem](#business-problem)
-2. [Objectives](#objectives)
-3. [Dataset](#dataset)
-4. [Dashboard](#dashboard)
-5. [Key Findings](#key-findings)
-6. [Recommendations](#recommendations)
-7. [Repository Structure](#repository-structure)
-8. [How to Open](#how-to-open)
-9. [Author](#author)
+Hotels lose revenue when booked rooms are cancelled, and the loss is hard to recover close to the arrival date. Management needs answers to three questions:
+
+1. **How big is the cancellation problem?**
+2. **When and through which channels do cancellations happen?**
+3. **Who are the loyal guests, and which rooms are in demand?**
 
 ---
 
-## Business Problem
+## 🔍 Key Insights
 
-The hotel's management faced four connected issues:
+| Metric | Value |
+|---|---|
+| Total bookings analyzed | 119,390 |
+| Total cancellations | **44K** |
+| Overall cancellation rate | **37.0%** |
+| Repeat guests | 3,810 |
 
-| # | Issue | Impact |
-|---|-------|--------|
-| 1 | **High cancellation rate** | Revenue uncertainty and unreliable occupancy forecasts |
-| 2 | **Unstable room demand** across months, seasons and weekday/weekend | Hard to plan inventory, staffing and pricing |
-| 3 | **Little visibility into repeated guests** | Loyalty value and source markets unclear |
-| 4 | **Spreadsheet-only reporting** | No way to explore the data interactively |
+- **Cancellations peak in spring and early summer.** June has the highest cancellation rate (**41.5%**), followed by April (40.8%) and May (39.7%). January is the lowest (30.5%).
+- **Online Travel Agents (OTAs) drive almost half of all cancellations (48.1%)**, followed by Groups (28.1%) and Offline TA/TO (19.3%). Direct bookings account for only 4.5%.
+- **Demand is seasonal.** Weekday and weekend nights both climb through spring and peak in **August**, then drop sharply in the winter months.
+- **Loyal guests are mostly domestic.** Portugal (PRT) accounts for about **3.3K of 3.8K repeat guests**, while international markets (GBR, ESP, FRA, ITA) rarely return.
+- **Room type A dominates demand (69.1% of bookings)**, followed by D (23.6%) and E (7.3%).
 
-## Objectives
+### 💡 Recommendations
 
-- **Cancellation analysis** — volume of cancellations, peak months, and contribution by market segment (Online TA, Groups, Offline TA/TO, Direct).
-- **Demand & seasonality** — weekday vs weekend nights, monthly patterns, and room-type mix.
-- **Customer insights** — repeated guests and booking volume by country.
-- **Dashboard** — one interactive page with Hotel and Country slicers for self-service exploration.
+- **Tighten deposit or non-refundable rates for OTA bookings**, especially for arrivals in April–June.
+- **Encourage direct bookings**, which have the lowest share of cancellations, through member rates or perks on the hotel's own website.
+- **Build loyalty programs for international guests**, since almost all repeat business today is domestic.
+- **Prioritize inventory and pricing for room type A**, which carries most of the demand.
 
-## Dataset
+---
 
-| Item | Detail |
-|------|--------|
-| Source | *Hotel Booking Demand* — Antonio, Almeida & Nunes (2019), *Data in Brief*; public on Kaggle |
-| Scope | Two hotels in Portugal (City Hotel and Resort Hotel) |
-| Period | Arrivals from July 2015 to August 2017 |
-| Size | 119,390 bookings × 32 columns |
+## 📊 Dashboard Features
 
-Column definitions for the fields used in the dashboard are in [`docs/data-dictionary.md`](docs/data-dictionary.md).
+- **KPI cards:** Total Cancellations, Repeat Guests, Cancellation Rate
+- **Cancellation Rate by Arrival Month:** months ranked by cancellation risk
+- **Weekday vs Weekend Nights by Month:** seasonal demand pattern, sorted in calendar order
+- **Repeat Guests by Country:** top 5 countries for returning guests
+- **Share of Cancellations by Market Segment:** which channels generate cancellations
+- **Bookings by Room Type:** room demand distribution
+- **Slicers:** filter the whole page by **Hotel** (City Hotel / Resort Hotel) and **Country**
 
-## Dashboard
+---
 
-| Visual | What it shows |
-|--------|---------------|
-| KPI cards | Total cancellations · Repeated guests · Total week nights stayed |
-| Cancellations by Arrival Month | Number of cancelled bookings per month |
-| Week vs Weekend Nights | Nights stayed on weekdays vs weekends, by month |
-| Guests by Country | Top 5 source countries |
-| Cancellations by Market Segment | Share of cancellations per segment |
-| Room Type Mix | Share of demand by assigned room type |
-| Slicers | Hotel (City / Resort) and Country |
+## 🧮 DAX Measures
 
-DAX measures used and recommended are documented in [`docs/dax-measures.md`](docs/dax-measures.md).
+```DAX
+Total Bookings      = COUNTROWS('Hotel Bookings')
+Total Cancellations = SUM('Hotel Bookings'[is_canceled])
+Cancellation Rate   = DIVIDE([Total Cancellations], [Total Bookings])
+Repeat Guests       = SUM('Hotel Bookings'[is_repeated_guest])
+Weekday Nights      = SUM('Hotel Bookings'[stays_in_week_nights])
+Weekend Nights      = SUM('Hotel Bookings'[stays_in_weekend_nights])
+```
 
-## Key Findings
+**Calendar month sorting.** The source stores months as text ("January", "February", …), which Power BI sorts alphabetically. A `Month Number` calculated column (1–12) and an `Arrival Month` column sorted by it keep every month-based visual in calendar order.
 
-| # | Finding | Evidence |
-|---|---------|----------|
-| 1 | **Cancellations are a major issue** | ~44K of 119K bookings were cancelled (≈37%). |
-| 2 | **Cancellations peak in late spring and summer** | August has the most cancellations (≈5.2K), followed by July and May; January has the fewest (≈1.8K). |
-| 3 | **Online Travel Agencies drive nearly half of cancellations** | Online TA ≈ 48% of cancellations among the four main segments, ahead of Groups (≈28%) and Offline TA/TO (≈19%). Direct bookings are only ≈4.5%. |
-| 4 | **Repeated guests are rare** | Only 3,810 bookings (≈3%) come from repeated guests — a small loyalty base. |
-| 5 | **Portugal is by far the largest source market** | ≈49K bookings, about four times the next market (UK, ≈12K), followed by France, Spain and Germany. |
-| 6 | **Room Type A dominates demand** | Room Type A takes the large majority of demand; D is a distant second and the remaining types are small. |
-| 7 | **Weekday nights carry the volume** | Week nights consistently exceed weekend nights in every month (≈299K week nights in total). |
+```DAX
+Month Number =
+SWITCH(
+    'Hotel Bookings'[arrival_date_month],
+    "January", 1, "February", 2, "March", 3, "April", 4,
+    "May", 5, "June", 6, "July", 7, "August", 8,
+    "September", 9, "October", 10, "November", 11, "December", 12
+)
 
-## Recommendations
+Arrival Month = 'Hotel Bookings'[arrival_date_month]   -- Sort by column: Month Number
+```
 
-1. **Tighten cancellation controls on OTA bookings** — offer partially or non-refundable rates, require deposits in peak months, and work with OTA partners to reduce speculative bookings.
-2. **Plan peak months around expected cancellations** — use seasonal pricing and data-driven overbooking for May–August, and reward early confirmation or prepayment.
-3. **Grow direct bookings** — the Direct segment cancels least; a best-rate guarantee and direct-booking perks shift volume toward it.
-4. **Build a loyalty programme** — with only ≈3% repeated guests, there is room to convert the large Portuguese and UK guest bases into returning customers.
-5. **Manage room inventory around Type A** — protect Type A availability in peak periods and upsell guests into under-used room types.
-6. **Lift weekend occupancy** — weekend and family packages and dynamic weekend pricing.
-7. **Next step: predictive modelling** — a cancellation-probability model and demand forecast feeding pricing and overbooking decisions.
+---
 
-## Repository Structure
+## 🗂️ Dataset
+
+- **Source:** [Hotel booking demand](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand) (public dataset on Kaggle), originally from Antonio, Almeida & Nunes (2019), *Hotel booking demand datasets*, Data in Brief.
+- **Size:** 119,390 bookings × 32 columns
+- **Scope:** a City Hotel and a Resort Hotel in Portugal, arrivals from July 2015 to August 2017
+- **Main fields used:** `hotel`, `is_canceled`, `arrival_date_month`, `stays_in_week_nights`, `stays_in_weekend_nights`, `country`, `market_segment`, `is_repeated_guest`, room type
+
+---
+
+## 🛠️ Tools
+
+- **Power BI Desktop:** data modeling, DAX measures, dashboard design
+- **Power Query:** data import and type cleaning
+
+---
+
+## 📁 Repository Structure
 
 ```
-hotel-booking-analytics-with-power-bi/
-├── dashboard/
-│   └── hotel-booking-demand-analysis.pbix   # Power BI report
-├── docs/
-│   ├── data-dictionary.md                   # Columns used
-│   └── dax-measures.md                      # DAX measures
+hotel-booking-demand-analysis/
+├── hotel-booking-demand-analysis.pbix   # Power BI report
+├── data/
+│   └── hotel_bookings.csv               # source data
 ├── images/
-│   └── dashboard-overview.png               # Dashboard screenshot
+│   └── dashboard.png                    # dashboard screenshot
 └── README.md
 ```
 
-## How to Open
+---
 
-1. Install **[Power BI Desktop](https://powerbi.microsoft.com/desktop/)** (free, Windows).
-2. Download or clone this repository.
-3. Open `dashboard/hotel-booking-demand-analysis.pbix`.
-4. Use the **Hotel** and **Country** slicers to filter every visual.
+## ▶️ How to Open
 
-## Tools
+1. Install [Power BI Desktop](https://powerbi.microsoft.com/desktop/) (free, Windows).
+2. Clone or download this repository.
+3. Open `hotel-booking-demand-analysis.pbix`.
+4. To refresh the data, go to **Home → Transform data → Data source settings → Change Source** and point it to `data/hotel_bookings.csv` on your machine.
 
-- Microsoft Power BI Desktop — data modelling, DAX, visualisation
-- Power Query — data preparation
+---
 
-## Author
+## 👤 Author
 
-**Yunido Baheramsyah** — Data Analyst
+**Yunido Baheramsyah**, Data Analyst & Data Scientist
 GitHub: [@brmsyh](https://github.com/brmsyh)
-
-> This is a portfolio project based on a public dataset; the client scenario is simulated.
