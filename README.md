@@ -1,4 +1,4 @@
-# 🏨 Hotel Booking & Cancellation Analytics - Power BI Dashboard
+# Hotel Booking & Cancellation Analytics - Power BI Dashboard
 
 An interactive Power BI dashboard that analyzes **119,390 hotel bookings** to show **when, where, and through which channels cancellations happen**, so hotel managers can plan pricing, deposit policies, and staffing around real demand.
 
